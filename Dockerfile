@@ -33,6 +33,10 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 RUN sed -i -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf \
     && a2enmod rewrite
 
+    RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
 # Expose port and run start script
 EXPOSE 80
 CMD ["sh", "/var/www/html/start.sh"]
+
